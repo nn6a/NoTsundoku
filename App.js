@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
-import reducer from './components/Timer/reducers';
+import reducer from './state/ducks/pomodoro/reducers';
 import { composeWithDevTools } from 'redux-devtools-extension'
-import Timer from './components/Timer';
+import Timer from './views/containers/Timer';
 
 const store = createStore(
     reducer,

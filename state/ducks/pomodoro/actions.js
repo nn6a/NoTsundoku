@@ -18,10 +18,8 @@ function addSecond() {
     }
 }
 
-const actionCreators = {
+export default {
     startTimer,
     restartTimer,
     addSecond
 };
-
-export {actionCreators};

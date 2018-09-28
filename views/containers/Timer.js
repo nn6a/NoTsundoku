@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View, StatusBar} from 'react-native';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {actionCreators as actions} from './actions';
+import {pomodoroOperations} from '../../state/ducks/pomodoro';
 
-import Button from '../Button';
+import Button from '../components/Button';
 
 class Timer extends Component {
     componentWillReceiveProps (nextProps) {
@@ -20,20 +20,6 @@ class Timer extends Component {
             clearInterval(this.state.timerInterval);
         }
     }
-
-    // static getDerivedStateFromProps (nextProps) {
-    //     const currentProps = this.props;
-    //     if (!currentProps.isPlaying && nextProps.isPlaying) {
-    //         const timerInterval = setInterval(() => {
-    //             currentProps.addSecond();
-    //         }, 1000);
-    //         this.setState({timerInterval});
-    //     } else if (currentProps.isPlaying && !nextProps.isPlaying) {
-    //         clearInterval(this.state.timerInterval);
-    //     }
-    //     // Return null to indicate no change to state.
-    //     return null;
-    // }
 
     formatTime (time) {
         let minutes = Math.floor(time / 60);
@@ -105,9 +91,7 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
     return {
-        startTimer: bindActionCreators(actions.startTimer, dispatch),
-        restartTimer: bindActionCreators(actions.restartTimer, dispatch),
-        addSecond: bindActionCreators(actions.addSecond, dispatch)
+        ...bindActionCreators(pomodoroOperations, dispatch)
     };
 }
 
