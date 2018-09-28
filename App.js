@@ -1,21 +1,21 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, {Component} from 'react';
+import {createStore} from 'redux';
+import {Provider} from 'react-redux';
+import reducer from './components/Timer/reducers';
+import { composeWithDevTools } from 'redux-devtools-extension'
+import Timer from './components/Timer';
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-      </View>
-    );
-  }
+const store = createStore(
+    reducer,
+    composeWithDevTools()
+);
+
+export default class App extends Component {
+    render () {
+        return (
+            <Provider store={store}>
+                <Timer/>
+            </Provider>
+        );
+    }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
