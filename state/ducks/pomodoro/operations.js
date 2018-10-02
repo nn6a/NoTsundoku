@@ -1,11 +1,13 @@
 import actions from './actions';
 
-const startTimer = actions.startTimer;
+const startPomodoro = actions.startPomodoro;
+const startBreak = actions.startBreak;
 const restartTimer = actions.restartTimer;
 const addSecond = actions.addSecond;
 
 export default {
-    startTimer,
+    startPomodoro,
+    startBreak,
     restartTimer,
     addSecond
 };

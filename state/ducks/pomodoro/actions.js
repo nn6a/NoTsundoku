@@ -1,8 +1,14 @@
-import {START_TIMER, RESTART_TIMER, ADD_SECOND} from "./types";
+import {START_POMODORO, START_BREAK, RESTART_TIMER, ADD_SECOND} from "./types";
 
-function startTimer() {
+function startPomodoro() {
     return {
-        type: START_TIMER
+        type: START_POMODORO
+    }
+}
+
+function startBreak() {
+    return {
+        type: START_BREAK
     }
 }
 
@@ -19,7 +25,8 @@ function addSecond() {
 }
 
 export default {
-    startTimer,
+    startPomodoro,
+    startBreak,
     restartTimer,
     addSecond
 };

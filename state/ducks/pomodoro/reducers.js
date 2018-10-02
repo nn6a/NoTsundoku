@@ -1,30 +1,35 @@
 import CONSTANTS from "./constants";
-import {START_TIMER, RESTART_TIMER, ADD_SECOND} from "./types";
+import {START_POMODORO, RESTART_TIMER, ADD_SECOND} from "./types";
 
 const initialState = {
-    isPlaying: false,
+    isPomodoro: false,
+    isBreak: false,
     elapsedTime: 0,
-    timerDuration: CONSTANTS.TIMER_DURATION
+    timerDuration: CONSTANTS.POMODORO_DURATION
 };
 
-function applyStartTimer(state) {
+function applyStartTimer (state) {
     return {
         ...state,
-        isPlaying: true
+        isPomodoro: true
     };
 }
 
-function applyRestartTimer(state) {
+function applyRestartTimer (state) {
     return {
         ...state,
-        isPlaying: false,
+        isPomodoro: false,
+        isBreak: false,
         elapsedTime: 0,
-        timerDuration: CONSTANTS.TIMER_DURATION
+        timerDuration: CONSTANTS.POMODORO_DURATION
     };
 }
 
-function applyAddSecond(state) {
-    if (state.elapsedTime < CONSTANTS.TIMER_DURATION) {
+function applyAddSecond (state) {
+    const currentDuration = state.isBreak ? CONSTANTS.BREAK_DURATION : CONSTANTS.POMODORO_DURATION;
+    const nextDuration = !state.isBreak ? CONSTANTS.BREAK_DURATION : CONSTANTS.POMODORO_DURATION;
+
+    if (state.elapsedTime < currentDuration) {
         return {
             ...state,
             elapsedTime: state.elapsedTime + 1
@@ -32,19 +37,21 @@ function applyAddSecond(state) {
     } else {
         return {
             ...state,
-            isPlaying: false
+            isBreak: !state.isBreak,
+            timerDuration: nextDuration,
+            elapsedTime: 0
         };
     }
 }
 
-function pomodoroReducer(state = initialState, action) {
+function pomodoroReducer (state = initialState, action) {
     switch (action.type) {
-        case START_TIMER:
+        case START_POMODORO:
             return applyStartTimer(state);
         case RESTART_TIMER:
             return applyRestartTimer(state);
         case ADD_SECOND:
-            return applyAddSecond(state);
+            return applyAddSecond(state, action);
         default:
             return state;
     }

@@ -9,13 +9,13 @@ import Button from '../components/Button';
 class Timer extends Component {
     componentWillReceiveProps (nextProps) {
         const currentProps = this.props;
-        if (!currentProps.isPlaying && nextProps.isPlaying) {
+        if (!currentProps.isPomodoro && nextProps.isPomodoro) {
             // start the interval
             const timerInterval = setInterval(() => {
                 currentProps.addSecond();
             }, 1000);
             this.setState({timerInterval});
-        } else if (currentProps.isPlaying && !nextProps.isPlaying) {
+        } else if (currentProps.isPomodoro && !nextProps.isPomodoro) {
             // stop the interval
             clearInterval(this.state.timerInterval);
         }
@@ -31,10 +31,10 @@ class Timer extends Component {
 
     render () {
         const {
-            isPlaying,
+            isPomodoro,
             elapsedTime,
             timerDuration,
-            startTimer,
+            startPomodoro,
             restartTimer
         } = this.props;
         return (
@@ -46,10 +46,10 @@ class Timer extends Component {
                     </Text>
                 </View>
                 <View style={styles.lower}>
-                    {!isPlaying && (
-                        <Button iconName='play-circle' onPress={startTimer}/>
+                    {!isPomodoro && (
+                        <Button iconName='play-circle' onPress={startPomodoro}/>
                     )}
-                    {isPlaying && (
+                    {isPomodoro && (
                         <Button iconName='stop-circle' onPress={restartTimer}/>
                     )}
                 </View>
@@ -81,9 +81,9 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps (state) {
-    const {isPlaying, elapsedTime, timerDuration} = state;
+    const {isPomodoro, elapsedTime, timerDuration} = state;
     return {
-        isPlaying,
+        isPomodoro,
         elapsedTime,
         timerDuration
     };

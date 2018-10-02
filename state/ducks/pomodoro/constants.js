@@ -1,5 +1,8 @@
-const TIMER_DURATION = 60 * 25;
+// const TIMER_DURATION = 60 * 25;
+const POMODORO_DURATION = 6;
+const BREAK_DURATION = 3;
 
 export default {
-    TIMER_DURATION
+    POMODORO_DURATION,
+    BREAK_DURATION
 }
