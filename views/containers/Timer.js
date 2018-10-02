@@ -35,7 +35,8 @@ class Timer extends Component {
             elapsedTime,
             timerDuration,
             startPomodoro,
-            restartTimer
+            restartTimer,
+            pomodoroCount
         } = this.props;
         return (
             <View style={styles.container}>
@@ -44,6 +45,7 @@ class Timer extends Component {
                     <Text style={styles.time}>
                         {this.formatTime(timerDuration - elapsedTime)}
                     </Text>
+                    <Text style={styles.count}>count: {pomodoroCount}</Text>
                 </View>
                 <View style={styles.lower}>
                     {!isPomodoro && (
@@ -77,15 +79,20 @@ const styles = StyleSheet.create({
         color: '#ffffff',
         fontSize: 120,
         fontWeight: '100'
+    },
+    count: {
+        color: '#ffffff',
+        fontSize: 16
     }
 });
 
 function mapStateToProps (state) {
-    const {isPomodoro, elapsedTime, timerDuration} = state;
+    const {isPomodoro, elapsedTime, timerDuration, pomodoroCount} = state;
     return {
         isPomodoro,
         elapsedTime,
-        timerDuration
+        timerDuration,
+        pomodoroCount
     };
 }
 

@@ -5,7 +5,8 @@ const initialState = {
     isPomodoro: false,
     isBreak: false,
     elapsedTime: 0,
-    timerDuration: CONSTANTS.POMODORO_DURATION
+    timerDuration: CONSTANTS.POMODORO_DURATION,
+    pomodoroCount: 0
 };
 
 function applyStartTimer (state) {
@@ -39,7 +40,8 @@ function applyAddSecond (state) {
             ...state,
             isBreak: !state.isBreak,
             timerDuration: nextDuration,
-            elapsedTime: 0
+            elapsedTime: 0,
+            pomodoroCount: state.isBreak ? state.pomodoroCount : (state.pomodoroCount + 1)
         };
     }
 }
