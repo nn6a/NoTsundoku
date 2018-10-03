@@ -82,10 +82,13 @@ class Timer extends Component {
                     <Text style={styles.count}>count: {pomodoroCount}</Text>
                 </View>
                 <View style={styles.lower}>
-                    {!isPomodoro && (
+                    {!isPomodoro && !isBreak && (
                         <Button iconName='play-circle' onPress={this.handleStartPomodoro}/>
                     )}
                     {isPomodoro && (
+                        <Button iconName='stop-circle' onPress={this.handleResetTimer}/>
+                    )}
+                    {isBreak && (
                         <Button iconName='stop-circle' onPress={this.handleResetTimer}/>
                     )}
                 </View>
