@@ -7,35 +7,68 @@ import {pomodoroOperations} from '../../state/ducks/pomodoro';
 import Button from '../components/Button';
 
 class Timer extends Component {
-    componentWillReceiveProps (nextProps) {
-        const currentProps = this.props;
-        if (!currentProps.isPomodoro && nextProps.isPomodoro) {
-            // start the interval
-            const timerInterval = setInterval(() => {
-                currentProps.addSecond();
-            }, 1000);
-            this.setState({timerInterval});
-        } else if (currentProps.isPomodoro && !nextProps.isPomodoro) {
-            // stop the interval
-            clearInterval(this.state.timerInterval);
+    state = {
+        intervalID: null
+    };
+
+    componentDidUpdate (prevProps) {
+        if (prevProps.isPomodoro) {
+            if (prevProps.pomodoroDuration - prevProps.elapsedTime === 0) {
+                prevProps.addPomodoroCount();
+                this.handleStartBreak();
+            }
+        } else if (prevProps.isBreak) {
+            if (prevProps.breakDuration - prevProps.elapsedTime === 0) {
+                this.handleStartPomodoro();
+            }
         }
     }
 
-    formatTime (time) {
+    startTimer = () => {
+        const intervalID = setInterval(() => {
+            this.props.addSecond();
+        }, 1000);
+        this.setState({intervalID});
+    };
+
+    stopTimer = () => {
+        if (this.state.intervalID) {
+            clearInterval(this.state.intervalID);
+        }
+    };
+
+    handleStartPomodoro = () => {
+        this.stopTimer();
+        this.props.startPomodoro();
+        this.startTimer();
+    };
+
+    handleStartBreak = () => {
+        this.stopTimer();
+        this.props.startBreak();
+        this.startTimer();
+    };
+
+    handleResetTimer = () => {
+        this.stopTimer();
+        this.props.resetTimer();
+    };
+
+    static formatTime (time) {
         let minutes = Math.floor(time / 60);
         time -= minutes * 60;
         let seconds = parseInt(time % 60, 10);
-        //      return '09:09' for example
+        // return '09:09' for example
         return `${minutes < 10 ? `0${minutes}` : minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
     }
 
     render () {
         const {
             isPomodoro,
+            isBreak,
             elapsedTime,
-            timerDuration,
-            startPomodoro,
-            restartTimer,
+            pomodoroDuration,
+            breakDuration,
             pomodoroCount
         } = this.props;
         return (
@@ -43,16 +76,17 @@ class Timer extends Component {
                 <StatusBar barStyle={'light-content'}/>
                 <View style={styles.upper}>
                     <Text style={styles.time}>
-                        {this.formatTime(timerDuration - elapsedTime)}
+                        {isPomodoro && Timer.formatTime(pomodoroDuration - elapsedTime)}
+                        {isBreak && Timer.formatTime(breakDuration - elapsedTime)}
                     </Text>
                     <Text style={styles.count}>count: {pomodoroCount}</Text>
                 </View>
                 <View style={styles.lower}>
                     {!isPomodoro && (
-                        <Button iconName='play-circle' onPress={startPomodoro}/>
+                        <Button iconName='play-circle' onPress={this.handleStartPomodoro}/>
                     )}
                     {isPomodoro && (
-                        <Button iconName='stop-circle' onPress={restartTimer}/>
+                        <Button iconName='stop-circle' onPress={this.handleResetTimer}/>
                     )}
                 </View>
             </View>
@@ -87,11 +121,23 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps (state) {
-    const {isPomodoro, elapsedTime, timerDuration, pomodoroCount} = state;
+    const {
+        isPomodoro,
+        isBreak,
+        elapsedTime,
+        pomodoroDuration,
+        breakDuration,
+        longBreakDuration,
+        pomodoroCount
+    } = state;
+
     return {
         isPomodoro,
+        isBreak,
         elapsedTime,
-        timerDuration,
+        pomodoroDuration,
+        breakDuration,
+        longBreakDuration,
         pomodoroCount
     };
 }

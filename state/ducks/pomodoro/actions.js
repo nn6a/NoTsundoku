@@ -1,4 +1,4 @@
-import {START_POMODORO, START_BREAK, RESTART_TIMER, ADD_SECOND} from "./types";
+import {START_POMODORO, START_BREAK, RESET_TIMER, ADD_SECOND, ADD_POMODORO_COUNT} from "./types";
 
 function startPomodoro() {
     return {
@@ -12,9 +12,9 @@ function startBreak() {
     }
 }
 
-function restartTimer() {
+function resetTimer() {
     return {
-        type: RESTART_TIMER
+        type: RESET_TIMER
     }
 }
 
@@ -24,9 +24,16 @@ function addSecond() {
     }
 }
 
+function addPomodoroCount() {
+    return {
+        type: ADD_POMODORO_COUNT
+    }
+}
+
 export default {
     startPomodoro,
     startBreak,
-    restartTimer,
-    addSecond
+    resetTimer,
+    addSecond,
+    addPomodoroCount
 };
