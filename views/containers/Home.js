@@ -1,11 +1,29 @@
 import React, {Component} from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import {View, TextInput, StyleSheet} from 'react-native';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {searchOperations} from '../../state/ducks/search';
 
-export default class Home extends Component {
-    render() {
+import SearchList from '../components/SearchList';
+
+class Home extends Component {
+    handleSearch = (query) => {
+        if (query.length === 0) return;
+        this.props.searchBooks(query);
+    };
+
+    render () {
+        const {
+            isFetching,
+            responses
+        } = this.props;
+
         return (
             <View style={styles.home}>
-                <Text>Hello, World!</Text>
+                <TextInput onChangeText={(text) => this.handleSearch(text)} style={styles.input}/>
+                {!isFetching && responses.length !== 0 && (
+                    <SearchList items={responses}/>
+                )}
             </View>
         )
     }
@@ -14,7 +32,39 @@ export default class Home extends Component {
 const styles = StyleSheet.create({
     home: {
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
+        alignItems: 'center'
+    },
+    input: {
+        height: 40,
+        width: 280,
+        marginTop: 40,
+        marginBottom: 16,
+        borderColor: '#bbb',
+        borderWidth: StyleSheet.hairlineWidth
     }
 });
+
+function mapStateToProps (state) {
+    const {
+        isFetching,
+        responses,
+        responseCount
+    } = state.searchState;
+
+    return {
+        isFetching,
+        responses,
+        responseCount
+    }
+}
+
+function mapDispatchToProps (dispatch) {
+    return {
+        ...bindActionCreators(searchOperations, dispatch)
+    };
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Home);
