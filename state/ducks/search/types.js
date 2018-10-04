@@ -1,0 +1,11 @@
+const SEARCH_REQUESTED = 'app/search/SEARCH_REQUESTED';
+const SEARCH_SUCCEEDED = 'app/search/SEARCH_SUCCEEDED';
+const SEARCH_FAILED = 'app/search/SEARCH_FAILED';
+const SEARCH_CLEAR = 'app/search/SEARCH_CLEAR';
+
+export {
+    SEARCH_REQUESTED,
+    SEARCH_SUCCEEDED,
+    SEARCH_FAILED,
+    SEARCH_CLEAR
+}

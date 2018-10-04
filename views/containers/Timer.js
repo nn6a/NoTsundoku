@@ -132,7 +132,7 @@ function mapStateToProps (state) {
         breakDuration,
         longBreakDuration,
         pomodoroCount
-    } = state;
+    } = state.pomodoroState;
 
     return {
         isPomodoro,
