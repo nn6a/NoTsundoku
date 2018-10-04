@@ -3,7 +3,7 @@ import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 import reducer from './state/ducks/pomodoro/reducers';
 import { composeWithDevTools } from 'redux-devtools-extension'
-import Timer from './views/containers/Timer';
+import Router from './config/router';
 
 const store = createStore(
     reducer,
@@ -14,7 +14,7 @@ export default class App extends Component {
     render () {
         return (
             <Provider store={store}>
-                <Timer/>
+                <Router/>
             </Provider>
         );
     }
