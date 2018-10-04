@@ -11,6 +11,18 @@ class Home extends Component {
         this.props.searchBooks(query);
     };
 
+    handleItemPress = (item) => {
+        const {title, authors, pageCount, publisher, publishedDate} = item.volumeInfo;
+
+        this.props.navigation.navigate('Detail', {
+            title,
+            authors,
+            pageCount,
+            publisher,
+            publishedDate
+        });
+    };
+
     render () {
         const {
             isFetching,
@@ -21,7 +33,7 @@ class Home extends Component {
             <View style={styles.home}>
                 <TextInput onChangeText={(text) => this.handleSearch(text)} style={styles.input}/>
                 {!isFetching && responses && responses.length !== 0 && (
-                    <SearchList items={responses}/>
+                    <SearchList items={responses} onItemPress={this.handleItemPress}/>
                 )}
             </View>
         )
