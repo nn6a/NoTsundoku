@@ -7,8 +7,6 @@ function addBook(bookData) {
         pageCount
     } = bookData;
 
-    console.log(title, authors, pageCount);
-
     return {
         type: ADD_BOOK,
         payload: {
