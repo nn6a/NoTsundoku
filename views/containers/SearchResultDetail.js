@@ -14,6 +14,7 @@ class SearchResultDetail extends Component {
 
     render () {
         const {navigation} = this.props;
+        const id = navigation.getParam('id', 'NO DATA');
         const title = navigation.getParam('title', 'NO DATA');
         const authors = navigation.getParam('authors', 'NO DATA');
         const pageCount = navigation.getParam('pageCount', 'NO DATA');
@@ -21,6 +22,7 @@ class SearchResultDetail extends Component {
         const publishedDate = navigation.getParam('publishedDate', 'NO DATA');
 
         const bookData = {
+            id,
             title,
             authors,
             pageCount
@@ -28,6 +30,7 @@ class SearchResultDetail extends Component {
 
         return (
             <View>
+                <Text>ID: {id}</Text>
                 <Text>出版日: {publishedDate}</Text>
                 <Text>出版社: {publisher}</Text>
                 <Text>タイトル: {title}</Text>

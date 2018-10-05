@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {searchOperations} from '../../state/ducks/search';
 
+import BookList from '../components/BookList';
 import SearchList from '../components/SearchList';
 
 class Home extends Component {
@@ -12,9 +13,17 @@ class Home extends Component {
     };
 
     handleItemPress = (item) => {
-        const {title, authors, pageCount, publisher, publishedDate} = item.volumeInfo;
+        const {id} = item;
+        const {
+            title,
+            authors,
+            pageCount,
+            publisher,
+            publishedDate
+        } = item.volumeInfo;
 
         this.props.navigation.navigate('Detail', {
+            id,
             title,
             authors,
             pageCount,
@@ -26,14 +35,17 @@ class Home extends Component {
     render () {
         const {
             isFetching,
-            responses
+            responses,
+            books
         } = this.props;
 
         return (
             <View style={styles.home}>
                 <TextInput onChangeText={(text) => this.handleSearch(text)} style={styles.input}/>
-                {!isFetching && responses && responses.length !== 0 && (
+                {(!isFetching && responses && responses.length !== 0) ? (
                     <SearchList items={responses} onItemPress={this.handleItemPress}/>
+                ) : (
+                    <BookList books={books}/>
                 )}
             </View>
         )
@@ -62,10 +74,15 @@ function mapStateToProps (state) {
         responseCount
     } = state.searchState;
 
+    const {
+        books
+    } = state.bookState;
+
     return {
         isFetching,
         responses,
-        responseCount
+        responseCount,
+        books
     }
 }
 
