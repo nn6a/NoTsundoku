@@ -12,7 +12,7 @@ class Home extends Component {
         this.props.searchBooks(query);
     };
 
-    handleItemPress = (item) => {
+    handleSearchItemPress = (item) => {
         const {id} = item;
         const {
             title,
@@ -22,7 +22,7 @@ class Home extends Component {
             publishedDate
         } = item.volumeInfo;
 
-        this.props.navigation.navigate('Detail', {
+        this.props.navigation.navigate('SearchResultDetail', {
             id,
             title,
             authors,
@@ -30,6 +30,11 @@ class Home extends Component {
             publisher,
             publishedDate
         });
+    };
+
+    handleBookItemPress = (item) => {
+        const {id} = item;
+        this.props.navigation.navigate('BookDetailSetting', {id});
     };
 
     render () {
@@ -43,9 +48,9 @@ class Home extends Component {
             <View style={styles.home}>
                 <TextInput onChangeText={(text) => this.handleSearch(text)} style={styles.input}/>
                 {(!isFetching && responses && responses.length !== 0) ? (
-                    <SearchList items={responses} onItemPress={this.handleItemPress}/>
+                    <SearchList items={responses} onItemPress={this.handleSearchItemPress}/>
                 ) : (
-                    <BookList books={books}/>
+                    <BookList books={books} onItemPress={this.handleBookItemPress}/>
                 )}
             </View>
         )

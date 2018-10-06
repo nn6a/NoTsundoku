@@ -1,16 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 
-const BookList = ({books}) => {
+const BookList = ({books, onItemPress}) => {
     return (
         <View>
             {books.map((book) => (
-                <View key={book.id} style={styles.item}>
-                    <Text>{book.title}</Text>
-                    <Text>{book.authors}</Text>
-                    <Text>{book.pageCount}</Text>
-                </View>
+                <TouchableOpacity key={book.id} onPressOut={() => onItemPress(book)}>
+                    <View style={styles.item}>
+                        <Text>{book.title}</Text>
+                        <Text>{book.authors}</Text>
+                        <Text>{book.pageCount}</Text>
+                    </View>
+                </TouchableOpacity>
             ))}
         </View>
     )
