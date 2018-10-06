@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {View, Text, StyleSheet} from 'react-native';
 
 const BookList = ({books}) => {
@@ -13,6 +14,16 @@ const BookList = ({books}) => {
             ))}
         </View>
     )
+};
+
+// TODO: make authors and pageCount isRequired
+BookList.propTypes = {
+    books: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired,
+        authors: PropTypes.array,
+        pageCount: PropTypes.number
+    })).isRequired
 };
 
 const styles = StyleSheet.create({
