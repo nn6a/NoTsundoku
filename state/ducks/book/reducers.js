@@ -2,6 +2,7 @@ import {ADD_BOOK} from "./types";
 
 /* State Shape = {
 *       books: [{
+*           id: string
 *           title: string,
 *           authors: array,
 *           pageCount: number
