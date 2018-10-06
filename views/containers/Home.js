@@ -3,6 +3,7 @@ import {View, TextInput, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {searchOperations} from '../../state/ducks/search';
+import {bookOperations} from "../../state/ducks/book";
 
 import BookList from '../components/BookList';
 import SearchList from '../components/SearchList';
@@ -34,6 +35,7 @@ class Home extends Component {
 
     handleBookItemPress = (item) => {
         const {id} = item;
+        this.props.selectBook(id);
         this.props.navigation.navigate('BookDetailSetting', {id});
     };
 
@@ -93,7 +95,7 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
     return {
-        ...bindActionCreators(searchOperations, dispatch)
+        ...bindActionCreators({...searchOperations, ...bookOperations}, dispatch)
     };
 }
 

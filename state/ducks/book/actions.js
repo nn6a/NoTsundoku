@@ -1,4 +1,4 @@
-import {ADD_BOOK} from "./types";
+import {ADD_BOOK, SELECT_BOOK} from "./types";
 
 function addBook(bookData) {
     let {
@@ -19,6 +19,15 @@ function addBook(bookData) {
     }
 }
 
+function selectBook(id) {
+    return {
+        type: SELECT_BOOK,
+        payload: {id}
+    }
+}
+
+
 export default {
-    addBook
+    addBook,
+    selectBook
 };

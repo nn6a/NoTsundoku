@@ -1,6 +1,7 @@
-import {ADD_BOOK} from "./types";
+import {ADD_BOOK, SELECT_BOOK} from "./types";
 
 /* State Shape = {
+*       selectedBookID: string
 *       books: [{
 *           id: string
 *           title: string,
@@ -11,6 +12,7 @@ import {ADD_BOOK} from "./types";
 * */
 
 const initialState = {
+    selectedBookID: '',
     books: []
 };
 
@@ -27,6 +29,11 @@ function bookReducer (state = initialState, action) {
             return {
                 ...state,
                 books: [...state.books, newBook]
+            };
+        case SELECT_BOOK:
+            return {
+                ...state,
+                selectedBookID: payload.id
             };
         default:
             return state;

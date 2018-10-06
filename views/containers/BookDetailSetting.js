@@ -2,24 +2,27 @@ import React, {Component} from 'react';
 import {Text, View} from 'react-native';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {bookOperations} from '../../state/ducks/book';
+import {bookOperations, bookSelectors} from '../../state/ducks/book';
 
 class BookDetailSetting extends Component {
     render() {
-        const {navigation} = this.props;
-        const id = navigation.getParam('id');
+        const {selectedBook} = this.props;
 
         return (
             <View>
-                <Text>BookDetailSetting</Text>
-                <Text>{id}</Text>
+                <Text>ID: {selectedBook.id}</Text>
+                <Text>Title: {selectedBook.title}</Text>
+                <Text>Author: {selectedBook.authors}</Text>
+                <Text>Page Count: {selectedBook.pageCount}</Text>
             </View>
         )
     }
 }
 
-function mapStateToProps () {
-    return {}
+function mapStateToProps (state) {
+    return {
+        selectedBook: bookSelectors.getBookByID(state)
+    };
 }
 
 function mapDispatchToProps (dispatch) {
