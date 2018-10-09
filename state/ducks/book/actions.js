@@ -1,4 +1,4 @@
-import {ADD_BOOK, SELECT_BOOK} from "./types";
+import {ADD_BOOK, SELECT_BOOK, SET_DEADLINE} from "./types";
 
 function addBook(bookData) {
     let {
@@ -26,8 +26,19 @@ function selectBook(id) {
     }
 }
 
+function setDeadline(id, date) {
+    return {
+        type: SET_DEADLINE,
+        payload: {
+            date,
+            id
+        }
+    }
+}
+
 
 export default {
     addBook,
-    selectBook
+    selectBook,
+    setDeadline
 };

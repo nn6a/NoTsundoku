@@ -8,7 +8,10 @@ import {DatePicker} from 'native-base';
 
 class BookDetailSetting extends Component {
     render() {
-        const {selectedBook} = this.props;
+        const {
+            selectedBook,
+            setDeadline
+        } = this.props;
 
         return (
             <View>
@@ -21,12 +24,12 @@ class BookDetailSetting extends Component {
                     minimumDate={new Date(2018, 1, 1)}
                     maximumDate={new Date(2018, 12, 31)}
                     locale={"ja"}
-                    modalTransparent={true}
+                    modalTransparent={false}
                     animationType={"fade"}
                     androidMode={"default"}
                     placeHolderText="Select date"
-                    textStyle={{ color: "green" }}
                     placeHolderTextStyle={{ color: "#d3d3d3" }}
+                    onDateChange={(newDate) => setDeadline(selectedBook.id, newDate)}
                 />
             </View>
         )

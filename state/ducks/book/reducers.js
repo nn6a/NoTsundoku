@@ -1,4 +1,4 @@
-import {ADD_BOOK, SELECT_BOOK} from "./types";
+import {ADD_BOOK, SELECT_BOOK, SET_DEADLINE} from "./types";
 
 /* State Shape = {
 *       selectedBookID: string
@@ -6,7 +6,8 @@ import {ADD_BOOK, SELECT_BOOK} from "./types";
 *           id: string
 *           title: string,
 *           authors: array,
-*           pageCount: number
+*           pageCount: number,
+*           deadline: date
 *       }]
 * }
 * */
@@ -34,6 +35,14 @@ function bookReducer (state = initialState, action) {
             return {
                 ...state,
                 selectedBookID: payload.id
+            };
+        case SET_DEADLINE:
+            return {
+                ...state,
+                books: state.books.map((book) => book.id === payload.id ? {
+                    ...book,
+                    deadline: payload.date
+                } : book)
             };
         default:
             return state;
