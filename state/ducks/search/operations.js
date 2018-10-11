@@ -8,10 +8,9 @@ const searchClear = actions.searchClear;
 const searchBooks = (query) => async (dispatch) => {
     dispatch(searchRequested());
     try {
-        const response = await fetch('https://www.googleapis.com/books/v1/volumes?q=' + query).then((response) => {
-            return response.json();
-        });
-        dispatch(searchSucceeded(response));
+        const response = await fetch('https://www.googleapis.com/books/v1/volumes?q=' + query);
+        const json = await response.json();
+        dispatch(searchSucceeded(json));
     } catch (e) {
         dispatch(searchFailed());
     }
